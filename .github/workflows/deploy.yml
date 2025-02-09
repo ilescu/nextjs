@@ -31,5 +31,5 @@ jobs:
             cd /var/www/xmu
             docker-compose stop frontend
             docker-compose build frontend
-            docker-compose up -d frontend
+            docker-compose start frontend
             docker image prune -f
