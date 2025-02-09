@@ -7,6 +7,7 @@ export default function Info() {
     </h1>
     <h2>
       This is the Info from update with hook!
+      update
     </h2>
   </>
   );
