@@ -25,9 +25,9 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-#          script: |
-#            cd /var/www/xmu
-#            git pull origin main
-#            docker-compose build frontend
-#            docker-compose up -d --no-deps frontend
-#            docker image prune -f
+          script: |
+            cd /var/www/xmu/frontend
+            git pull origin main
+            docker-compose build frontend
+            docker-compose up -d --no-deps frontend
+            docker image prune -f
