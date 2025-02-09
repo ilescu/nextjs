@@ -29,7 +29,7 @@ jobs:
             cd /var/www/xmu/frontend
             git pull origin main
             cd /var/www/xmu
-            docker-compose stop frontend
+            docker-compose down
             docker-compose build frontend
-            docker-compose start frontend
+            docker-compose up -d
             docker image prune -f
