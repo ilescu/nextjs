@@ -1,36 +1,33 @@
-name: Deploy to Server
+name: Deploy Frontend
 
 on:
   push:
     branches:
-      - main  # Rulează workflow-ul la fiecare `git push` pe `main`
+      - main  # Rulează workflow-ul doar când facem push pe branch-ul `main`
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Folosim runner GitHub standard
+    runs-on: ubuntu-latest  # Folosește runner GitHub standard
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Copiază fișierele pe server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "."
-          target: "/var/www/xmu/frontend"
+      - name: Test SSH Connection
+        run: |
+          echo "${{ secrets.SERVER_SSH_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo SSH Connected Successfully"
 
-      - name: Restart Docker pe server
+      - name: Deploy frontend via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          script: "echo SSH connection successful!"
 #          script: |
-#            cd /var/www/xmu/frontend
+#            cd /var/www/xmu
 #            git pull origin main
-#            docker-compose down frontend
-#            docker-compose up -d --build frontend
+#            docker-compose build frontend
+#            docker-compose up -d --no-deps frontend
+#            docker image prune -f
