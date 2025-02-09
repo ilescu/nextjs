@@ -28,6 +28,7 @@ jobs:
           script: |
             cd /var/www/xmu/frontend
             git pull origin main
+            cd /var/www/xmu
             docker-compose build frontend
-            docker-compose up -d --no-deps frontend
+            docker-compose up -d frontend
             docker image prune -f
