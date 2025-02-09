@@ -7,7 +7,7 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    fetch('https://xmuteam.com/users', {
+    fetch('https://xmuteam.com/api/users', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -32,9 +32,9 @@ export default function Users() {
       <div>
         <h1>Users List update! zzzzzzzzasklmdlaksmdlakmsdlkams</h1>
         <ul>
-          {/*{users.map((user) => (*/}
-          {/*    <li key={user.id}>{user.name}</li>*/}
-          {/*))}*/}
+          {users.map((user) => (
+              <li key={user.id}>{user.name}</li>
+          ))}
         </ul>
       </div>
   );
