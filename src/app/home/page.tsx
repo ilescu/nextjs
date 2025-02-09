@@ -7,7 +7,7 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    fetch('http://backend:4000/api/users', {
+    fetch('https://xmuteam.com/users', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
