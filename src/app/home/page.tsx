@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 export default function Users() {
-  const [users, setUsers] = useState<{ id: number; name: string }[]>([]);
+  const [users, setUsers] = useState<{ id: string; name: string }[]>([]);
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function Users() {
     })
         .then((response) => response.json())
         .then((data) => {
-          setUsers(data);
+          setUsers(data.data);
           setLoading(false);
         })
         .catch((error) => {
