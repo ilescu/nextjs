@@ -3,7 +3,7 @@ name: Deploy Frontend
 on:
   push:
     branches:
-      - client2  # Rulează workflow-ul doar când facem push pe branch-ul `main`
+      - main  # Rulează workflow-ul doar când facem push pe branch-ul `main`
 
 jobs:
   deploy:
@@ -27,7 +27,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /var/www/xmu/frontend
-            git pull origin client2
+            git pull origin main
             cd /var/www/xmu
             docker-compose down
             docker-compose build frontend
