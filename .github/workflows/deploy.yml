@@ -1,0 +1,35 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # Rulează workflow-ul la fiecare `git push` pe `main`
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Folosim runner GitHub standard
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Copiază fișierele pe server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "."
+          target: "/var/www/xmu/frontend"
+
+      - name: Restart Docker pe server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /var/www/xmu/frontend
+            git pull origin main
+            docker-compose down frontend
+            docker-compose up -d --build frontend
